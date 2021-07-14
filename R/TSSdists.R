@@ -46,6 +46,27 @@ calcFeatureDist_aY = function(query, features) {
   finaltable = do.call("rbind", annotatedPeaks)
 }
 
+#' Efficiently split a data.table by a column in the table
+#'
+#' @param DT Data.table to split
+#' @param split_factor Column to split, which can be a character vector
+#'        or an integer.
+#' @return List of data.table objects, split by column
+# @examples
+# DT = data.table::data.table(letters, grp = rep(c("group1", "group2"), 13))
+# splitDataTable(DT, "grp")
+# splitDataTable(DT, 2)
+splitDataTable_aY = function(DT, split_factor) {
+  factor_order = unique(DT[, get(split_factor)])
+  if (is.numeric(split_factor)) {
+    split_factor = colnames(DT)[split_factor]
+    message("Integer split_factor, changed to: ", split_factor)
+  }
+  l = lapply(split(seq_len(nrow(DT)), DT[, get(split_factor)]),
+             function(x) DT[x])
+  return(l[factor_order])
+}
+
 # Function uses data.table rolling join to identify the nearest features
 # really quickly.
 #
