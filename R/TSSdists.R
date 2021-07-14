@@ -46,14 +46,13 @@ calcFeatureDist_aY = function(query, features) {
   finaltable = do.call("rbind", annotatedPeaks)
 }
 
-#' Function uses data.table rolling join to identify the nearest features
-#' really quickly.
-#'
-#' @param DT1 A data.table object to be joined to a second data.table object.
-#' @param DT2 A second data.table object to join with DT1.
-#'
-#' @return A rolling joined data.table object.
-#' @export
+# Function uses data.table rolling join to identify the nearest features
+# really quickly.
+#
+# @param DT1 A data.table object to be joined to a second data.table object.
+# @param DT2 A second data.table object to join with DT1.
+#
+# @return A rolling joined data.table object.
 DTNearest_aY = function(DT1, DT2) {
   if (is.null(DT1)) {
     return(NULL)

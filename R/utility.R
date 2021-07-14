@@ -31,7 +31,6 @@
 #' @param split_factor Column to split, which can be a character vector
 #'        or an integer.
 #' @return List of data.table objects, split by column
-#' @export
 # @examples
 # DT = data.table::data.table(letters, grp = rep(c("group1", "group2"), 13))
 # splitDataTable(DT, "grp")
