@@ -10,5 +10,5 @@
  data("testData")
  data("yeastGenes")
  
- distances = calcFeatureDist_aY(query, features)
+ distances = calcFeatureDist_aY(testData, yeastGenes)
 ```
