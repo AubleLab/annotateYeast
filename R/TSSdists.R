@@ -10,14 +10,15 @@
 #' This allows you to assess the relative location.
 #'
 #' @param query A data.frame with following 3 columns: chr, start, end
-#' @param features A data.frame with gene coordinates
+#' @param features A data.frame with gene coordinates. Must contain:
+#'                 chr, start, end, gene, geneNum, strand
 #'
-#' @return A vector of genomic distances for each query region relative to its
-#'     closest feature.
+#' @return A data frame with distances to the nearest gene
 #' @export
 #' @examples
-#' vistaSftd = GenomicRanges::shift(vistaEnhancers, 100000)
-#' calcFeatureDist(vistaEnhancers, vistaSftd)
+#' data("testData")
+#' data("yeastGenes")
+#' calcFeatureDist_aY(testData, yeastGenes)
 calcFeatureDist_aY = function(query, features) {
   if (is(query, "GRangesList")) {
     # Recurse over each GRanges object
