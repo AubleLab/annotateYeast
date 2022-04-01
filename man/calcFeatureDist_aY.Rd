@@ -9,11 +9,11 @@ calcFeatureDist_aY(query, features)
 \arguments{
 \item{query}{A data.frame with following 3 columns: chr, start, end}
 
-\item{features}{A data.frame with gene coordinates}
+\item{features}{A data.frame with gene coordinates. Must contain:
+chr, start, end, gene, geneNum, strand}
 }
 \value{
-A vector of genomic distances for each query region relative to its
-closest feature.
+A data frame with distances to the nearest gene
 }
 \description{
 For a given query set of genomic regions, and a given feature set of
@@ -27,6 +27,7 @@ returns negative values for downstream distances instead of absolute values.
 This allows you to assess the relative location.
 }
 \examples{
-vistaSftd = GenomicRanges::shift(vistaEnhancers, 100000)
-calcFeatureDist(vistaEnhancers, vistaSftd)
+data("testData")
+data("yeastGenes")
+calcFeatureDist_aY(testData, yeastGenes)
 }
