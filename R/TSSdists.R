@@ -25,7 +25,7 @@ calcFeatureDist_aY = function(query, features) {
     x = lapply(query, calcFeatureDist, features)
     return(x)
   }
-
+  
   # # splid the tables by chromosomes and make sure that mitochondrial
   # # chromosome is called the same
   # if ("chrmt" %in% query[, "chr"]){
@@ -35,16 +35,29 @@ calcFeatureDist_aY = function(query, features) {
   # if ("chrmt" %in% features[, "chr"]){
   #   features[features[,"chr"]=="chrmt","chr"] = "chrM"
   # }
-
+  
   query = as.data.table(query)
   features = as.data.table(features)
-
+  
   queryDTs = splitDataTable_aY(query, split_factor="chr")
   featureDTs = splitDataTable_aY(features, split_factor="chr")
-
+  
   annotatedPeaks = mapply(queryDTs, featureDTs[names(queryDTs)],
                           FUN=DTNearest_aY)
-  finaltable = do.call("rbind", annotatedPeaks)
+  if (class(annotatedPeaks) == "list"){
+    finaltable = do.call("rbind", annotatedPeaks)
+  } else {
+    for (i in names(queryDTs)){
+      annotTable = DTNearest_aY(queryDTs[[i]], featureDTs[[i]])
+      
+      if (i == names(queryDTs)[1]){
+        finaltable = annotTable
+      } else {
+        finaltable = rbind(finaltable, annotTable)
+      }
+    }
+  }
+  
 }
 
 #' Efficiently split a data.table by a column in the table
